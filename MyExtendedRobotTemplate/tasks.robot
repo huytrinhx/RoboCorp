@@ -11,4 +11,5 @@ Variables           MyVariables.py
 Main
     # Log    ${MYURL}
     # Launch My GitHub
-    Call Weather Api    ${MyLocation}
+    # Call Weather Api    ${MyLocation}
+    Do String Operations    My Name is Ashev Lev
