@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 5.0.1 (Python 3.7.5 on win32)" generated="20220707 13:28:37.075" rpa="true" schemaversion="3">
+<suite id="s1" name="Tasks" source="c:\Users\Hewitt\Documents\GitHub\RoboCorp\MyExtendedRobotTemplate\tasks.robot">
+<test id="s1-t1" name="Main" line="11">
+<kw name="Call Weather Api" library="MyLibrary">
+<arg>${MyLocation}</arg>
+<msg timestamp="20220707 13:28:38.720" level="INFO">Temperature Low: 62
+Temperature High: 88</msg>
+<status status="PASS" starttime="20220707 13:28:38.414" endtime="20220707 13:28:38.722"/>
+</kw>
+<status status="PASS" starttime="20220707 13:28:38.408" endtime="20220707 13:28:38.723"/>
+</test>
+<doc>Template robot main suite.</doc>
+<status status="PASS" starttime="20220707 13:28:37.083" endtime="20220707 13:28:38.728"/>
+</suite>
+<statistics>
+<total>
+<stat pass="1" fail="0" skip="0">All Tasks</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="1" fail="0" skip="0" id="s1" name="Tasks">Tasks</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
