@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 5.0.1 (Python 3.7.5 on win32)" generated="20220711 13:38:55.632" rpa="false" schemaversion="3">
+<suite id="s1" name="Tests" source="C:\Users\htrinh\Documents\RoboCorp\My-Extended-Producer-Consumer-Robot-Template\tests\tests.robot">
+<test id="s1-t1" name="Normal Read Config" line="6">
+<kw name="Set Test Variable" library="BuiltIn">
+<arg>${TestValue}</arg>
+<arg>TestValue</arg>
+<doc>Makes a variable available everywhere within the scope of the current test.</doc>
+<msg timestamp="20220711 13:38:57.026" level="INFO">${TestValue} = TestValue</msg>
+<status status="PASS" starttime="20220711 13:38:57.024" endtime="20220711 13:38:57.027"/>
+</kw>
+<kw name="Initialize All Settings" library="shared">
+<var>${JsonConfig}</var>
+<kw name="Load JSON from file" library="RPA.JSON">
+<var>${JsonConfig}</var>
+<arg>${JsonConfigFilepath}</arg>
+<doc>Load JSON data from a file, and return it as JSON serializable object.
+Depending on the input file the object can be either a dictionary,
+a list, or a scalar value.</doc>
+<msg timestamp="20220711 13:38:57.030" level="INFO">Loading JSON from file: C:\Users\htrinh\Documents\RoboCorp\My-Extended-Producer-Consumer-Robot-Template/devdata/env.json</msg>
+<msg timestamp="20220711 13:38:57.031" level="INFO">${JsonConfig} = {'Test': 'Test Value', 'RPA_WORKITEMS_ADAPTER': 'RPA.Robocorp.WorkItems.FileAdapter', 'RPA_INPUT_WORKITEM_PATH': '%{ROBOT_ROOT}/devdata/work-items-in/test-input-for-producer/work-items.json', 'RPA_OUT...</msg>
+<status status="PASS" starttime="20220711 13:38:57.028" endtime="20220711 13:38:57.031"/>
+</kw>
+<for flavor="IN">
+<var>${table}</var>
+<value>${tables}</value>
+<iter>
+<var name="${table}">EMPTY_LIST</var>
+<kw name="Open Workbook" library="RPA.Excel.Files">
+<arg>${ExcelConfigFilepath}</arg>
+<doc>Open an existing Excel workbook.</doc>
+<msg timestamp="20220711 13:38:57.060" level="INFO">Opened workbook: &lt;RPA.Excel.Files.XlsxWorkbook object at 0x000002DB361105C8&gt;</msg>
+<status status="PASS" starttime="20220711 13:38:57.032" endtime="20220711 13:38:57.060"/>
+</kw>
+<kw name="Read Worksheet As Table" library="RPA.Excel.Files">
+<var>${data}</var>
+<doc>Read the contents of a worksheet into a Table container. Allows
+sorting/filtering/manipulating using the ``RPA.Tables`` library.</doc>
+<msg timestamp="20220711 13:38:57.062" level="INFO">Created table: Table(columns=['A', 'B', 'C', 'D'], rows=4)</msg>
+<msg timestamp="20220711 13:38:57.063" level="INFO">${data} = Table(columns=['A', 'B', 'C', 'D'], rows=4)</msg>
+<status status="PASS" starttime="20220711 13:38:57.061" endtime="20220711 13:38:57.063"/>
+</kw>
+<kw name="Add to JSON" library="RPA.JSON">
+<var>${JsonConfig}</var>
+<arg>${JsonConfig}</arg>
+<arg>$.[${table}]</arg>
+<arg>${data}</arg>
+<doc>Add items into a JSON serializable object and return the result.</doc>
+<msg timestamp="20220711 13:38:57.065" level="INFO">Add to JSON with expression: '$.[EMPTY_LIST]'</msg>
+<msg timestamp="20220711 13:38:57.162" level="INFO">${JsonConfig} = {'Test': 'Test Value', 'RPA_WORKITEMS_ADAPTER': 'RPA.Robocorp.WorkItems.FileAdapter', 'RPA_INPUT_WORKITEM_PATH': '%{ROBOT_ROOT}/devdata/work-items-in/test-input-for-producer/work-items.json', 'RPA_OUT...</msg>
+<status status="PASS" starttime="20220711 13:38:57.063" endtime="20220711 13:38:57.162"/>
+</kw>
+<status status="PASS" starttime="20220711 13:38:57.031" endtime="20220711 13:38:57.162"/>
+</iter>
+<status status="PASS" starttime="20220711 13:38:57.031" endtime="20220711 13:38:57.162"/>
+</for>
+<return>
+<value>${JsonConfig}</value>
+<status status="PASS" starttime="20220711 13:38:57.162" endtime="20220711 13:38:57.163"/>
+</return>
+<msg timestamp="20220711 13:38:57.163" level="INFO">${JsonConfig} = {'Test': 'Test Value', 'RPA_WORKITEMS_ADAPTER': 'RPA.Robocorp.WorkItems.FileAdapter', 'RPA_INPUT_WORKITEM_PATH': '%{ROBOT_ROOT}/devdata/work-items-in/test-input-for-producer/work-items.json', 'RPA_OUT...</msg>
+<status status="PASS" starttime="20220711 13:38:57.027" endtime="20220711 13:38:57.163"/>
+</kw>
+<kw name="Get value from JSON" library="RPA.JSON">
+<var>${toTestValue}</var>
+<arg>${JsonConfig}</arg>
+<arg>$.Test</arg>
+<doc>Get a single value from a JSON serializable object that matches the given expression.</doc>
+<msg timestamp="20220711 13:38:57.164" level="INFO">Get value from JSON with expression: '$.Test'</msg>
+<msg timestamp="20220711 13:38:57.201" level="INFO">${toTestValue} = Test Value</msg>
+<status status="PASS" starttime="20220711 13:38:57.163" endtime="20220711 13:38:57.202"/>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<arg>${TestValue}</arg>
+<arg>${toTestValue}</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<msg timestamp="20220711 13:38:57.203" level="FAIL">TestValue != Test Value</msg>
+<status status="FAIL" starttime="20220711 13:38:57.202" endtime="20220711 13:38:57.203"/>
+</kw>
+<status status="FAIL" starttime="20220711 13:38:57.022" endtime="20220711 13:38:57.203">TestValue != Test Value</status>
+</test>
+<test id="s1-t2" name="Read Config With Tables" line="12">
+<kw name="Log" library="BuiltIn">
+<arg>Done</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20220711 13:38:57.207" level="INFO">Done</msg>
+<status status="PASS" starttime="20220711 13:38:57.206" endtime="20220711 13:38:57.207"/>
+</kw>
+<status status="PASS" starttime="20220711 13:38:57.204" endtime="20220711 13:38:57.207"/>
+</test>
+<status status="FAIL" starttime="20220711 13:38:55.635" endtime="20220711 13:38:57.208"/>
+</suite>
+<statistics>
+<total>
+<stat pass="1" fail="1" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="1" fail="1" skip="0" id="s1" name="Tests">Tests</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

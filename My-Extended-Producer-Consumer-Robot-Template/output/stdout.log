@@ -1,0 +1,13 @@
+==============================================================================
+Tests                                                                         
+==============================================================================
+Normal Read Config                                                    | FAIL |
+TestValue != Test Value
+------------------------------------------------------------------------------
+Read Config With Tables                                               | PASS |
+------------------------------------------------------------------------------
+Tests                                                                 | FAIL |
+2 tests, 1 passed, 1 failed
+==============================================================================
+Output:  C:\Users\htrinh\Documents\RoboCorp\My-Extended-Producer-Consumer-Robot-Template\output\output.xml
+Log:     C:\Users\htrinh\Documents\RoboCorp\My-Extended-Producer-Consumer-Robot-Template\output\log.html
