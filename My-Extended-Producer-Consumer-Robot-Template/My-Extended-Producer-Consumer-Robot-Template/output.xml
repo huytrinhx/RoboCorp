@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 5.0.1 (Python 3.7.5 on win32)" generated="20220714 13:27:36.506" rpa="true" schemaversion="3">
+<suite id="s1" name="Producer" source="c:\Users\htrinh\Documents\RoboCorp\My-Extended-Producer-Consumer-Robot-Template\producer.robot">
+<test id="s1-t1" name="Main" line="19">
+<try>
+<branch type="TRY">
+<kw name="Initialize">
+<var>@{CONFIG}</var>
+<doc>Retrieve all configurations and credentials
+Launching all target applications
+If fail, take a screenshot and get to closing stage</doc>
+<kw name="Initialize All Settings" library="shared">
+<var>&amp;{Config}</var>
+<doc>Return a dictionary that store the jsonconfig and all the tables</doc>
+<kw name="Copy Dictionary" library="Collections">
+<var>${OutputDict}</var>
+<arg>${EMPTY_DICT}</arg>
+<doc>Returns a copy of the given dictionary.</doc>
+<msg timestamp="20220714 13:27:40.279" level="INFO">${OutputDict} = {}</msg>
+<status status="PASS" starttime="20220714 13:27:40.279" endtime="20220714 13:27:40.279"/>
+</kw>
+<kw name="Load JSON from file" library="RPA.JSON">
+<var>${JsonConfig}</var>
+<arg>${JsonConfigFilepath}</arg>
+<doc>Load JSON data from a file, and return it as JSON serializable object.
+Depending on the input file the object can be either a dictionary,
+a list, or a scalar value.</doc>
+<msg timestamp="20220714 13:27:40.280" level="INFO">Loading JSON from file: c:\Users\htrinh\Documents\RoboCorp\My-Extended-Producer-Consumer-Robot-Template/devdata/env.json</msg>
+<msg timestamp="20220714 13:27:40.282" level="INFO">${JsonConfig} = {'ProjectName': 'Template Project', 'RPA_WORKITEMS_ADAPTER': 'RPA.Robocorp.WorkItems.FileAdapter', 'RPA_INPUT_WORKITEM_PATH': '%{ROBOT_ROOT}/devdata/work-items-in/test-input-for-producer/work-items.js...</msg>
+<status status="PASS" starttime="20220714 13:27:40.280" endtime="20220714 13:27:40.283"/>
+</kw>
+<kw name="Set To Dictionary" library="Collections">
+<arg>${OutputDict}</arg>
+<arg>jsonConfig</arg>
+<arg>${JsonConfig}</arg>
+<doc>Adds the given ``key_value_pairs`` and ``items`` to the ``dictionary``.</doc>
+<status status="PASS" starttime="20220714 13:27:40.283" endtime="20220714 13:27:40.283"/>
+</kw>
+<for flavor="IN">
+<var>${table}</var>
+<value>@{tables}</value>
+<iter>
+<var name="${table}"/>
+<kw name="Log" library="BuiltIn">
+<arg>${table}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="NOT RUN" starttime="20220714 13:27:40.284" endtime="20220714 13:27:40.284"/>
+</kw>
+<kw name="Open Workbook" library="RPA.Excel.Files">
+<arg>${ExcelConfigFilepath}</arg>
+<doc>Open an existing Excel workbook.</doc>
+<status status="NOT RUN" starttime="20220714 13:27:40.284" endtime="20220714 13:27:40.284"/>
+</kw>
+<kw name="Read Worksheet As Table" library="RPA.Excel.Files">
+<var>${data}</var>
+<arg>name=${table}</arg>
+<doc>Read the contents of a worksheet into a Table container. Allows
+sorting/filtering/manipulating using the ``RPA.Tables`` library.</doc>
+<status status="NOT RUN" starttime="20220714 13:27:40.285" endtime="20220714 13:27:40.285"/>
+</kw>
+<kw name="Set To Dictionary" library="Collections">
+<arg>${OutputDict}</arg>
+<arg>${table}</arg>
+<arg>${data}</arg>
+<doc>Adds the given ``key_value_pairs`` and ``items`` to the ``dictionary``.</doc>
+<status status="NOT RUN" starttime="20220714 13:27:40.285" endtime="20220714 13:27:40.285"/>
+</kw>
+<status status="NOT RUN" starttime="20220714 13:27:40.284" endtime="20220714 13:27:40.285"/>
+</iter>
+<status status="NOT RUN" starttime="20220714 13:27:40.283" endtime="20220714 13:27:40.285"/>
+</for>
+<return>
+<value>${OutputDict}</value>
+<status status="PASS" starttime="20220714 13:27:40.285" endtime="20220714 13:27:40.285"/>
+</return>
+<msg timestamp="20220714 13:27:40.286" level="INFO">&amp;{Config} = { jsonConfig={'ProjectName': 'Template Project', 'RPA_WORKITEMS_ADAPTER': 'RPA.Robocorp.WorkItems.FileAdapter', 'RPA_INPUT_WORKITEM_PATH': '%{ROBOT_ROOT}/devdata/work-items-in/test-input-for-producer/...</msg>
+<status status="PASS" starttime="20220714 13:27:40.279" endtime="20220714 13:27:40.286"/>
+</kw>
+<kw name="Initialize All Applications" library="shared">
+<arg>${Config}</arg>
+<doc>Launching all applications</doc>
+<kw name="Log" library="BuiltIn">
+<arg>Initialize all applications</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20220714 13:27:40.288" level="INFO">Initialize all applications</msg>
+<status status="PASS" starttime="20220714 13:27:40.287" endtime="20220714 13:27:40.288"/>
+</kw>
+<status status="PASS" starttime="20220714 13:27:40.286" endtime="20220714 13:27:40.288"/>
+</kw>
+<return>
+<value>${Config}</value>
+<status status="PASS" starttime="20220714 13:27:40.288" endtime="20220714 13:27:40.289"/>
+</return>
+<msg timestamp="20220714 13:27:40.289" level="INFO">@{CONFIG} = [ jsonConfig ]</msg>
+<status status="PASS" starttime="20220714 13:27:40.278" endtime="20220714 13:27:40.289"/>
+</kw>
+<kw name="Get New Cases">
+<var>${ENQUEUE_TABLE}</var>
+<arg>${CONFIG}</arg>
+<kw name="Define Enqueue Table">
+<var>${ENQUEUE_TABLE}</var>
+<doc>Initialize and define structure of enqueue table</doc>
+<kw name="Create List" library="BuiltIn">
+<var>@{columns}</var>
+<arg>ColumnA</arg>
+<arg>ColumnB</arg>
+<arg>ColumnC</arg>
+<doc>Returns a list containing given items.</doc>
+<msg timestamp="20220714 13:27:40.290" level="INFO">@{columns} = [ ColumnA | ColumnB | ColumnC ]</msg>
+<status status="PASS" starttime="20220714 13:27:40.290" endtime="20220714 13:27:40.290"/>
+</kw>
+<kw name="Create Table" library="RPA.Tables">
+<var>${enqueueTable}</var>
+<arg>columns=${columns}</arg>
+<doc>Create Table object from data.</doc>
+<msg timestamp="20220714 13:27:40.291" level="INFO">Created table: Table(columns=['ColumnA', 'ColumnB', 'ColumnC'], rows=0)</msg>
+<msg timestamp="20220714 13:27:40.291" level="INFO">${enqueueTable} = Table(columns=['ColumnA', 'ColumnB', 'ColumnC'], rows=0)</msg>
+<status status="PASS" starttime="20220714 13:27:40.290" endtime="20220714 13:27:40.291"/>
+</kw>
+<return>
+<value>${enqueueTable}</value>
+<status status="PASS" starttime="20220714 13:27:40.291" endtime="20220714 13:27:40.292"/>
+</return>
+<msg timestamp="20220714 13:27:40.292" level="INFO">${ENQUEUE_TABLE} = Table(columns=['ColumnA', 'ColumnB', 'ColumnC'], rows=0)</msg>
+<status status="PASS" starttime="20220714 13:27:40.290" endtime="20220714 13:27:40.292"/>
+</kw>
+<kw name="Get Table Dimensions" library="RPA.Tables">
+<var>${row_count}</var>
+<var>${column_count}</var>
+<arg>${ENQUEUE_TABLE}</arg>
+<doc>Return table dimensions, as (rows, columns).</doc>
+<msg timestamp="20220714 13:27:40.292" level="INFO">${row_count} = 0</msg>
+<msg timestamp="20220714 13:27:40.292" level="INFO">${column_count} = 3</msg>
+<status status="PASS" starttime="20220714 13:27:40.292" endtime="20220714 13:27:40.292"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>Detected ${row_count} new transactions</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20220714 13:27:40.294" level="INFO">Detected 0 new transactions</msg>
+<status status="PASS" starttime="20220714 13:27:40.292" endtime="20220714 13:27:40.294"/>
+</kw>
+<return>
+<value>${ENQUEUE_TABLE}</value>
+<status status="PASS" starttime="20220714 13:27:40.294" endtime="20220714 13:27:40.294"/>
+</return>
+<msg timestamp="20220714 13:27:40.295" level="INFO">${ENQUEUE_TABLE} = Table(columns=['ColumnA', 'ColumnB', 'ColumnC'], rows=0)</msg>
+<status status="PASS" starttime="20220714 13:27:40.289" endtime="20220714 13:27:40.295"/>
+</kw>
+<kw name="Load Queue">
+<arg>${CONFIG}</arg>
+<arg>${ENQUEUE_TABLE}</arg>
+<for flavor="IN">
+<var>${row}</var>
+<value>@{in_Table}</value>
+<iter>
+<var name="${row}"/>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${variables}</var>
+<arg>Name=${row}[Name]</arg>
+<arg>Zip=${row}[Zip]</arg>
+<arg>Item=${row}[Item]</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="NOT RUN" starttime="20220714 13:27:40.300" endtime="20220714 13:27:40.301"/>
+</kw>
+<kw name="Create Output Work Item" library="RPA.Robocorp.WorkItems">
+<arg>variables=${variables}</arg>
+<arg>save=True</arg>
+<doc>Create a new output work item with optional variables and files.</doc>
+<status status="NOT RUN" starttime="20220714 13:27:40.303" endtime="20220714 13:27:40.303"/>
+</kw>
+<status status="NOT RUN" starttime="20220714 13:27:40.299" endtime="20220714 13:27:40.303"/>
+</iter>
+<status status="NOT RUN" starttime="20220714 13:27:40.298" endtime="20220714 13:27:40.303"/>
+</for>
+<kw name="Get Table Dimensions" library="RPA.Tables">
+<var>${row_count}</var>
+<var>${column_count}</var>
+<arg>${in_Table}</arg>
+<doc>Return table dimensions, as (rows, columns).</doc>
+<msg timestamp="20220714 13:27:40.304" level="INFO">${row_count} = 0</msg>
+<msg timestamp="20220714 13:27:40.304" level="INFO">${column_count} = 3</msg>
+<status status="PASS" starttime="20220714 13:27:40.304" endtime="20220714 13:27:40.304"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>Finished loading ${row_count} transactions</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20220714 13:27:40.305" level="INFO">Finished loading 0 transactions</msg>
+<status status="PASS" starttime="20220714 13:27:40.304" endtime="20220714 13:27:40.305"/>
+</kw>
+<status status="PASS" starttime="20220714 13:27:40.295" endtime="20220714 13:27:40.305"/>
+</kw>
+<status status="PASS" starttime="20220714 13:27:40.278" endtime="20220714 13:27:40.305"/>
+</branch>
+<branch type="EXCEPT" pattern_type="start">
+<pattern>${BRE}</pattern>
+<kw name="Log" library="BuiltIn">
+<arg>${BRE}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="NOT RUN" starttime="20220714 13:27:40.306" endtime="20220714 13:27:40.306"/>
+</kw>
+<kw name="Email Users Error Message">
+<arg>${CONFIG}</arg>
+<arg>${ERROR_MESSAGE}</arg>
+<doc>Inform users of error in the session</doc>
+<status status="NOT RUN" starttime="20220714 13:27:40.306" endtime="20220714 13:27:40.306"/>
+</kw>
+<status status="NOT RUN" starttime="20220714 13:27:40.305" endtime="20220714 13:27:40.306"/>
+</branch>
+<branch type="EXCEPT" pattern_type="start">
+<pattern>${SE}</pattern>
+<kw name="Take Screenshot" library="Screenshot">
+<doc>Takes a screenshot in JPEG format and embeds it into the log file.</doc>
+<status status="NOT RUN" starttime="20220714 13:27:40.306" endtime="20220714 13:27:40.306"/>
+</kw>
+<kw name="Email Users Error Message">
+<arg>${CONFIG}</arg>
+<arg>${ERROR_MESSAGE}</arg>
+<doc>Inform users of error in the session</doc>
+<status status="NOT RUN" starttime="20220714 13:27:40.307" endtime="20220714 13:27:40.307"/>
+</kw>
+<status status="NOT RUN" starttime="20220714 13:27:40.306" endtime="20220714 13:27:40.307"/>
+</branch>
+<branch type="FINALLY">
+<kw name="Get Table Dimensions" library="RPA.Tables">
+<var>${rows_count}</var>
+<var>${columns_count}</var>
+<arg>${ENQUEUE_TABLE}</arg>
+<doc>Return table dimensions, as (rows, columns).</doc>
+<msg timestamp="20220714 13:27:40.309" level="INFO">${rows_count} = 0</msg>
+<msg timestamp="20220714 13:27:40.309" level="INFO">${columns_count} = 3</msg>
+<status status="PASS" starttime="20220714 13:27:40.308" endtime="20220714 13:27:40.309"/>
+</kw>
+<if>
+<branch type="IF" condition="${rows_count} == 0">
+<kw name="Log" library="BuiltIn">
+<arg>No queue data to load</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20220714 13:27:40.310" level="INFO">No queue data to load</msg>
+<status status="PASS" starttime="20220714 13:27:40.310" endtime="20220714 13:27:40.310"/>
+</kw>
+<status status="PASS" starttime="20220714 13:27:40.310" endtime="20220714 13:27:40.310"/>
+</branch>
+<branch type="ELSE">
+<kw name="Email End Users Enqueue Data">
+<arg>${CONFIG}</arg>
+<arg>${ENQUEUE_TABLE}</arg>
+<doc>Inform users of data being enqueued in the session</doc>
+<status status="NOT RUN" starttime="20220714 13:27:40.310" endtime="20220714 13:27:40.311"/>
+</kw>
+<status status="NOT RUN" starttime="20220714 13:27:40.310" endtime="20220714 13:27:40.311"/>
+</branch>
+<status status="PASS" starttime="20220714 13:27:40.309" endtime="20220714 13:27:40.311"/>
+</if>
+<kw name="Closing Applications" library="shared">
+<kw name="Log" library="BuiltIn">
+<arg>Closing All Applications</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20220714 13:27:40.312" level="INFO">Closing All Applications</msg>
+<status status="PASS" starttime="20220714 13:27:40.311" endtime="20220714 13:27:40.312"/>
+</kw>
+<status status="PASS" starttime="20220714 13:27:40.311" endtime="20220714 13:27:40.312"/>
+</kw>
+<status status="PASS" starttime="20220714 13:27:40.307" endtime="20220714 13:27:40.312"/>
+</branch>
+<status status="PASS" starttime="20220714 13:27:40.277" endtime="20220714 13:27:40.312"/>
+</try>
+<status status="PASS" starttime="20220714 13:27:40.276" endtime="20220714 13:27:40.314"/>
+</test>
+<status status="PASS" starttime="20220714 13:27:36.509" endtime="20220714 13:27:40.317"/>
+</suite>
+<statistics>
+<total>
+<stat pass="1" fail="0" skip="0">All Tasks</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="1" fail="0" skip="0" id="s1" name="Producer">Producer</stat>
+</suite>
+</statistics>
+<errors>
+<msg timestamp="20220714 13:27:39.931" level="WARN">This is a deprecated import that will be removed in favor of RPA.Browser.Selenium</msg>
+</errors>
+</robot>
